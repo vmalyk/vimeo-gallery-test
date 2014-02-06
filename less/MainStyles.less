@@ -1,0 +1,214 @@
+html,
+body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+   font-family: @contentFontFamily; 
+}
+
+#container {
+    background : @gray;
+    height : 100%;   
+}
+
+h1 {
+    color          : @white;
+    font-size      : 30px;
+    line-height    : 32px;
+    width          : 150px;
+    margin         : 0 auto;
+    padding        : 10px 0;
+    text-transform : uppercase;
+    font-weight    : 100;
+       
+}
+
+button {
+    border: solid 1px @orangeDark;
+    background: @orange;
+    color: @white;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 18px 30px;
+    border-radius: 4px;
+
+    background-image: -ms-linear-gradient(top, @orangeLighter 0%, @orangeLight 100%);
+    background-image: -moz-linear-gradient(top, @orangeLighter 0%, @orangeLight 100%);
+    background-image: -o-linear-gradient(top, @orangeLighter 0%, @orangeLight 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @orangeLighter), color-stop(1, @orangeLight));
+    background-image: -webkit-linear-gradient(top, @orangeLighter 0%, @orangeLight 100%);
+    background-image: linear-gradient(to bottom, @orangeLighter 0%, @orangeLight 100%);
+}
+
+.left { float : left; }
+.hide { display : none; }
+
+
+.icon {
+    color : @white;
+    margin-right : 10px;
+    font-style : normal;
+    font-weight : 600; 
+}
+
+.icon.facebook {
+    padding : 0 8px;
+    border : 2px solid @white;
+    font-size : 14px;
+    line-height : 18px;
+    border-radius : 50%;
+}
+
+#login-page {
+    text-align: center;
+    h1 {
+      width          : 280px;
+      margin         : 40px auto;
+      color          : @white;
+      text-transform : uppercase;
+      font-weight    : normal;
+      font-size      : 38px;
+      line-height    : 42px;
+    }
+}
+
+#logo {
+   width : 40%;
+   padding-top: 10%;
+   margin: 0 auto;
+   border-bottom : solid 1px @grayLight;
+   img {
+      width      : 100%;
+      max-height : 100%;
+   }
+}
+
+#header {
+    position         : relative;
+    width            : 100%;
+    background-color : @orange;
+    border-bottom    : solid 2px @orangeDark;
+}
+
+#logout_fb {
+    position : absolute;
+    left     : 10px;
+    padding  : 10px 0;
+    width    : 32px;
+    img {
+        width      : 100%;
+        max-height : 100%;
+    }
+}
+
+
+#content { 
+   border-top : solid 2px @grayDarker;   
+}
+
+#login {
+	border-bottom : solid 1px @grayLight;
+	margin : 20px;
+	padding-bottom : 20px;
+}
+
+
+#avatar {
+    width  : 80px;
+    height : 80px;
+    float: left;
+    overflow: hidden;
+
+    -webkit-border-radius: 50%;
+       -moz-border-radius: 50%;
+            border-radius: 50%;
+
+    -webkit-box-shadow: 0 0 0 2px @grayDarker;
+       -moz-box-shadow: 0 0 0 2px @grayDarker;
+            box-shadow: 0 0 0 2px @grayDarker;
+}
+
+#photo {
+	margin: 0;
+	padding: 0;
+	max-width:100%;
+	border: 0;
+}
+
+#username {
+	color: @white;
+	margin-left: 80px;
+	font-size: 24px;
+	line-height: 28px;
+	padding : 15px 0 15px 30px;
+	height: 50px;
+	font-weight: 900;
+}
+
+#heart{
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: solid 2px #e85722;
+    border-top: none;
+    border-left: none;
+    margin-left: 40px;
+    margin-top: 60px;
+
+    -webkit-transform: rotate(45deg); /* 45 degrees rotation counter clockwise */
+       -moz-transform: rotate(45deg); 
+        -ms-transform: rotate(45deg); 
+         -o-transform: rotate(45deg); 
+            transform: rotate(45deg);  
+}
+
+#heart:before,
+#heart:after {
+    position: absolute; 
+    content: ""; 
+    left: 0px;
+    top: 0px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border : solid 2px @orange;
+    border-radius: 20px 20px 0 0; /* make the top edge round */
+    border-bottom: none; 
+}
+
+#heart:before{
+    -webkit-transform: rotate(270deg); 
+       -moz-transform: rotate(270deg); 
+        -ms-transform: rotate(270deg); 
+         -o-transform: rotate(270deg); 
+            transform: rotate(270deg); 
+    -webkit-transform-origin: 0 100%; /* Rotate it around the bottom-left corner */
+       -moz-transform-origin: 0 100%; 
+        -ms-transform-origin: 0 100%; 
+         -o-transform-origin: 0 100%; 
+            transform-origin: 0 100%;
+}
+
+#heart:after { 
+    left: -2px; /* placing the right part properly */
+    top : -31px; 
+} 
+
+#modal {
+    box-sizing      : border-box;
+    -moz-box-sizing : border-box;
+    width  : 100%;
+    height : 100%;
+    background : @white;
+    padding : 20px 10px 10px;
+    .modal-text {
+       display: inline-block;
+       font-size: 24px;
+       text-transform: uppercase;
+       margin-left: 26px;
+       width: 65%;
+    }
+    .close { width : 100%; }
+}
+

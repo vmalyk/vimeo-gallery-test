@@ -1,0 +1,71 @@
+.jcarousel-wrapper {
+    margin: 30px 20px;
+    position: relative;
+}
+
+/** Carousel **/
+
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    ul {
+        width: 20000em;
+        position: relative;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        width: 300px;
+        float: left;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto !important;
+    }
+}
+
+/** Carousel Pagination **/
+
+.jcarousel-pagination {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+    margin: 0;
+}
+
+.jcarousel-pagination a {
+    text-decoration: none;
+    display: inline-block;
+
+    font-size    : 6px;
+    height       : 6px;
+    width        : 6px;
+    line-height  : 6px;
+
+    background   : @grayLight;
+    color        : @white;
+    border-radius: 10px;
+    text-indent  : -9999px;
+    
+    border       : solid 2px @grayLight;
+    margin-right : 15px;
+    &.active {
+        background: @orange;
+        color     : @white;
+        opacity   : 1;
+        border    : solid 2px @gray;
+
+        -webkit-box-shadow: 0 0 0 1px @orange;
+           -moz-box-shadow: 0 0 0 1px @orange;
+                box-shadow: 0 0 0 1px @orange;
+    }
+}
