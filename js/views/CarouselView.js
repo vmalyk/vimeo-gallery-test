@@ -59,7 +59,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
             this.dom.carousel.hammer().on('swiperight', function() {
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':last')) {
-                   activePage.next().trigger('jcarouselpagination:active'); 
+                   activePage.next().trigger('click'); 
                    alert(activePage.next().html());
                 }
             });
