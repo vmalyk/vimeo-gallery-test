@@ -52,11 +52,11 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                 });
 
             //Touch Events
-            this.dom.carousel.hummer().on('swipeleft', function() {
-                alert()
+            this.dom.carousel.hammer().on('swipeleft', function() {
+                alert('left');
             }); 
 
-            this.dom.carousel.hummer().on('swiperight', function() {
+            this.dom.carousel.hammer().on('swiperight', function() {
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':last')) {
                    activePage.next().trigger('jcarouselpagination:active'); 
