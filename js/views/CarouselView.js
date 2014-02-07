@@ -53,14 +53,16 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
 
             //Touch Events
             this.dom.carousel.hammer().on('swipeleft', function() {
-                alert('left');
+                var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                if (!activePage.is(':first')) {
+                   var activePage.prev().click(); 
+                }
             }); 
 
             this.dom.carousel.hammer().on('swiperight', function() {
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':last')) {
-                   activePage.next().trigger('click'); 
-                   alert(activePage.next().html());
+                   activePage.next().click(); 
                 }
             });
 
