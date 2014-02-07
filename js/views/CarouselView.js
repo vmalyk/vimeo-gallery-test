@@ -1,4 +1,4 @@
-define(['jquery.jCarousel'], function() {
+define(['jquery.jCarousel','jquery.Hummer'], function() {
     var MAX_WIDTH = 700,
         MAX_PER_PAGE = 2;
 
@@ -50,6 +50,20 @@ define(['jquery.jCarousel'], function() {
                 .jcarousel({
                     wrap: 'circular'
                 });
+
+            //Touch Events
+            this.dom.carousel.hummer().on('swipeleft', function() {
+                alert()
+            }); 
+
+            this.dom.carousel.hummer().on('swiperight', function() {
+                var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                if (!activePage.is(':last')) {
+                   activePage.next().trigger('jcarouselpagination:active'); 
+                   alert(activePage.next().html());
+                }
+            });
+
             this.dom.paging
                 .on('jcarouselpagination:active', 'a', function() {
                     $(this).addClass('active');
