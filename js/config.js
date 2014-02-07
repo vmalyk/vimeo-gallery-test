@@ -11,7 +11,7 @@ requirejs.config({
         //jQuery
         "jquery"           : "lib/jquery/jquery.min",
         "jquery.jCarousel" : "lib/jquery/jquery.jcarousel.min",
-        "jquery.Hummer"    : "lib/jquery/jquery.hammer.min", 
+        "jquery.Hammer"    : "lib/jquery/jquery.hammer.min", 
         //Backbone & Underscore
         "underscore"       : "lib/underscore/underscore.min",
         "backbone"         : "lib/backbone/backbone.min",
@@ -27,7 +27,7 @@ requirejs.config({
             deps    : ["jquery"],
             exports : "jQuery", 
         },
-        "jquery.Hummer" : {
+        "jquery.Hammer" : {
             deps    : ["jquery"],
             exports : "jQuery", 
         },

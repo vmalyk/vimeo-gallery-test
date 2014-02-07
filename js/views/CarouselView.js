@@ -1,4 +1,4 @@
-define(['jquery.jCarousel','jquery.Hummer'], function() {
+define(['jquery.jCarousel','jquery.Hammer'], function() {
     var MAX_WIDTH = 700,
         MAX_PER_PAGE = 2;
 
