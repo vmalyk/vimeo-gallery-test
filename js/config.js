@@ -11,7 +11,7 @@ requirejs.config({
         //jQuery
         "jquery"           : "lib/jquery/jquery.min",
         "jquery.jCarousel" : "lib/jquery/jquery.jcarousel.min",
-        "jquery.Hummer"    : "lib/jquer/jquery.hummer.min", 
+        "jquery.Hummer"    : "lib/jquery/jquery.hummer.min", 
         //Backbone & Underscore
         "underscore"       : "lib/underscore/underscore.min",
         "backbone"         : "lib/backbone/backbone.min",
