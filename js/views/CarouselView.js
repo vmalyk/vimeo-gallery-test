@@ -16,13 +16,16 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
         pageTemplate : _.template('<a href="#<%= page %>"><%= page %></a>'),
         
         viewTemplate : _.template('<ul>\
-                                       <% _.each(models, function(model) { %>\
-                                          <%= itemTempate(model) %>\
+                                       <% _.each(models, function(model, key) { %>\
+                                          <%= itemTempate(_.extend({}, model, {number : key})) %>\
                                        <% }); %>\
                                        <li></li>\
                                    </ul>'), 
 
-        itemTemplate : _.template('<li><img src="<%= fileName %>" alt="<%= description %>"></li>'),
+        itemTemplate : _.template('<li>\
+                                       <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
+                                       </iframe>\
+                                    </li>'),
 
         render : function () {
             var html = this.viewTemplate({
