@@ -19,6 +19,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                                        <% _.each(models, function(model, key) { %>\
                                           <%= itemTempate(_.extend({}, model, {number : key})) %>\
                                        <% }); %>\
+                                       <li></li>\
                                    </ul>'), 
 
         itemTemplate : _.template('<li>\
@@ -79,8 +80,8 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                 })
                 .jcarouselPagination({
                     perPage: perPage,
-                    item: function(page) {
-                        return pageTemplate({ page : page });
+                    item: function(page) {                         
+                        return (page <= 5) && pageTemplate({ page : page });
                     }
                 });
 
