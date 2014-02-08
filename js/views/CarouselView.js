@@ -19,7 +19,6 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                                        <% _.each(models, function(model, key) { %>\
                                           <%= itemTempate(_.extend({}, model, {number : key})) %>\
                                        <% }); %>\
-                                       <li></li>\
                                    </ul>'), 
 
         itemTemplate : _.template('<li>\
