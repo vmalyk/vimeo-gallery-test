@@ -10,27 +10,26 @@ define(['module', 'models/FacebookUser', 'views/LoginView', 'views/GalleryView']
         initialize : function (templates) {
             this.currentView = null;
             this.container = $("#container");
-            this.initFacebookUser();
+            this.initFacebookApp();
         },
          
-        initFacebookUser : function () {
+        initFacebookApp : function () {
             FB.init({
                 appId: module.config().facebookAppId
             });
-            this.facebookUser = new FacebookUser();
         },
 
         openLogin : function () {
             this.destroyView();
             this.currentView = new LoginView({
-                model : this.facebookUser
+                model : new FacebookUser()
             });
         },
 
         openGallery : function () {
             this.destroyView();
             this.currentView = new GalleryView({
-                model : this.facebookUser
+                model : new FacebookUser()
             });
         },
 

@@ -18,7 +18,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },
         
         setOptions : function (options) {
-            this.userModel = options.model;
+            this.userModel = options.model;            
             this.requestModel = new VimeoRequestModel(); 
         },
 
@@ -37,17 +37,17 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             this.userModel.on('change', this.onFbConnected, this);
             this.userModel.on('facebook:disconnected', this.onFbDisConnected, this);
             this.requestModel.on(this.requestModel.dataLoadedEvent, this.onVideoLoaded, this);
-            this.requestModel.on(this.requestModel.dataNotLoadedEvent, this.onError);  
+            this.requestModel.on(this.requestModel.dataNotLoadedEvent, this.onFbDisConnected);  
         },
 
         fetchData : function () {
-            this.userModel.updateLoginStatus();
-            this.userModel.isConnected && this.requestModel.fetchData();
+            this.userModel.updateLoginStatus();            
         },
 
-        onFbConnected : function() {
-            this.dom.userPhoto.attr("src", this.model.get('pictures').normal);
-            this.dom.userName.html(this.model.get('first_name') + '<br/>' + this.model.get('last_name'));
+        onFbConnected : function(model) {
+            this.dom.userPhoto.attr("src", model.get('pictures')['normal']);
+            this.dom.userName.html(model.get('first_name') + '<br/>' + model.get('last_name'));
+            this.userModel.isConnected() && this.requestModel.fetchData();
         },
 
         onFbDisConnected : function(model, response) {
@@ -77,10 +77,6 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             }   
         },   
         
-        onError : function () {
-            console.log('Gopaaaa!');
-        },
-
         events : {
             "click #logout_fb"     : "logoutHandler",
             "click .close"         : "closeModalHandler", 

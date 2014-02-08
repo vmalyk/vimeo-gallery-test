@@ -19,7 +19,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                                        <% _.each(models, function(model, key) { %>\
                                           <%= itemTempate(_.extend({}, model, {number : key})) %>\
                                        <% }); %>\
-                                       <li></li>\
+                                       <% if (models.length % 2 != 0 ) { %><li></li><% } %>\
                                    </ul>'), 
 
         itemTemplate : _.template('<li>\
@@ -37,7 +37,8 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
 
         bindEvents : function() {
             var carousel = this.dom.carousel,
-                pageTemplate = this.pageTemplate;
+                pageTemplate = this.pageTemplate,
+                itemCount = this.models.length;
 
             this.dom.carousel
                 .on('jcarousel:reload jcarousel:create', function () {
@@ -81,7 +82,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                 .jcarouselPagination({
                     perPage: perPage,
                     item: function(page) {                         
-                        return (page <= 5) && pageTemplate({ page : page });
+                        return (page <= itemCount) && pageTemplate({ page : page });
                     }
                 });
 
