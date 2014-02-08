@@ -1,15 +1,15 @@
-define(['views/CarouselView' , 'text!templates/profile.html'], 
-   function(CarouselView, profileTemplate) {
+define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
+   function(VimeoRequestModel, CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
         el : "#container",
 
-        initialize : function () {            
+        initialize : function (options) {            
             this.render();
             this.setOptions(options);
             this.registerDOMElements();
             this.bindEvents();
-            this.model.updateLoginStatus();
+            this.fetchData();
         },
 
         render : function () {
@@ -18,7 +18,8 @@ define(['views/CarouselView' , 'text!templates/profile.html'],
         },
         
         setOptions : function (options) {
-            this.model = options.model; 
+            this.userModel = options.model;
+            this.requestModel = new VimeoRequestModel(); 
         },
 
         registerDOMElements : function () {
@@ -32,12 +33,21 @@ define(['views/CarouselView' , 'text!templates/profile.html'],
         }, 
 
         bindEvents : function () {
-            this.model.on('change', _.bind(this.onFbConnected, this));
+            this.userModel.on('change', _.bind(this.onFbConnected, this));
+            this.userModel.on('facebook:disconnected', _.bind(this.onFbDisConnected, this));
+            this.requestModel.on(this.requestModel.dataLoadedEvent, this.onVideoLoaded);
+            this.requestModel.on(this.requestModel.dataNotLoadedEvent, this.onError);  
+        },
+
+        fetchData : function () {
+            this.userModel.updateLoginStatus();
+            this.requestModel.fetchData();
         },
 
         onFbConnected : function() {
             this.dom.userPhoto.attr("src", this.model.get('pictures').normal);
             this.dom.userName.html(this.model.get('first_name') + '<br/>' + this.model.get('last_name'));
+            
             var imgModel = [
               {id: 1, fileName: "img/img1.jpg", description : "Image 1"},
               {id: 2, fileName: "img/img2.jpg", description : "Image 2"},
@@ -56,8 +66,17 @@ define(['views/CarouselView' , 'text!templates/profile.html'],
             });
         },
 
-        showStatus : function(status) {
-            this.dom.loginStatus.text(status);
+        onFbDisConnected : function(model, response) {
+            window.location.hash = "";
+        },
+
+        onVideoLoaded : function (data) {
+           console.log('count fetched : ' + data);
+           console.log(data);  
+        },   
+        
+        onError : function () {
+            console.log('Gopaaaa!');
         },
 
         events : {
@@ -67,7 +86,7 @@ define(['views/CarouselView' , 'text!templates/profile.html'],
 
         logoutHandler : function(event) {
             event.preventDefault();
-            this.model.logout();  
+            this.userModel.logout();  
         },
         
         undelegateEvents: function () {
