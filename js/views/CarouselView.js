@@ -23,7 +23,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                                    </ul>'), 
 
         itemTemplate : _.template('<li>\
-                                       <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
+                                       <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=player<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
                                        </iframe>\
                                     </li>'),
 

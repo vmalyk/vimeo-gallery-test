@@ -28,6 +28,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
                 userName      : this.$('#username'), 
                 videoCarousel : this.$('.jcarousel'),
                 videoPaging   : this.$('.jcarousel-pagination'),
+                modal         : this.$('#modal'), 
                 logoutButton  : this.$('#logout_fb'),   
             }
         }, 
@@ -60,7 +61,20 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
                     carousel : this.dom.videoCarousel,
                     paging   : this.dom.videoPaging
                 }   
-            });  
+            });
+            
+            var view = this;
+
+            var players = $('.video-player');
+            _.each(players, function(player) { 
+                $f(player).addEvent('ready', ready);
+            }); 
+
+            function ready(player_id) {
+                var froogaloop = $f(player_id);
+                froogaloop.addEvent('play', _.bind(view.closeModalHandler, view));    
+                froogaloop.addEvent('finish', _.bind(view.showModalHandler, view));
+            }   
         },   
         
         onError : function () {
@@ -68,14 +82,29 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },
 
         events : {
-            "click #logout_fb" : "logoutHandler",
+            "click #logout_fb"     : "logoutHandler",
+            "click .close"         : "closeModalHandler", 
         },
 
         logoutHandler : function(event) {
             event.preventDefault();
             this.userModel.logout();  
         },
-        
+
+        closeModalHandler : function(event) {
+            var iframe = this.dom.modal.closest('li').find('.video-player');
+            iframe.show();
+            this.dom.modal.hide();
+        }, 
+
+        showModalHandler : function(data) {
+            var iframe = $('#'+data),
+                modal = this.dom.modal,
+                list = iframe.closest('li');
+            iframe.hide();
+            list.append(modal.show());
+        },
+
         undelegateEvents: function () {
             !this.videoCarousel || this.videoCarousel.undelegateEvents();             
         }
