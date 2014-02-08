@@ -42,7 +42,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
 
         fetchData : function () {
             this.userModel.updateLoginStatus();
-            this.requestModel.fetchData();
+            this.userModel.isConnected && this.requestModel.fetchData();
         },
 
         onFbConnected : function() {

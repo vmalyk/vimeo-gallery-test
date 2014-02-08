@@ -41,7 +41,6 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
             this.dom.carousel
                 .on('jcarousel:reload jcarousel:create', function () {
                     var width = carousel.innerWidth();
-                
                     if (width >= MAX_WIDTH) {
                         width = width / MAX_PER_PAGE;
                         perPage = MAX_PER_PAGE
