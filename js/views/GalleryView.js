@@ -1,22 +1,26 @@
-define(['models/FacebookUser', 'views/CarouselView' , 'text!templates/profile.html'], 
-   function(FacebookUser, CarouselView, profileTemplate) {
+define(['views/CarouselView' , 'text!templates/profile.html'], 
+   function(CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
         el : "#container",
 
-        initialize : function () {
-            this.model = new FacebookUser();
+        initialize : function () {            
             this.render();
+            this.setOptions(options);
             this.registerDOMElements();
             this.bindEvents();
             this.model.updateLoginStatus();
         },
 
-        render : function () {            
+        render : function () {
             this.$el.html(profileTemplate);
             return this;
         },
         
+        setOptions : function (options) {
+            this.model = options.model; 
+        },
+
         registerDOMElements : function () {
             this.dom = {
                 userPhoto     : this.$('#photo'),
@@ -29,7 +33,6 @@ define(['models/FacebookUser', 'views/CarouselView' , 'text!templates/profile.ht
 
         bindEvents : function () {
             this.model.on('change', _.bind(this.onFbConnected, this));
-            this.model.on('facebook:disconnected', _.bind(this.onFbDisConnected, this));  
         },
 
         onFbConnected : function() {
@@ -52,10 +55,6 @@ define(['models/FacebookUser', 'views/CarouselView' , 'text!templates/profile.ht
 
             });
         },
-
-        onFbDisConnected : function(model) {
-            window.location.hash = "";
-        }, 
 
         showStatus : function(status) {
             this.dom.loginStatus.text(status);

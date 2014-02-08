@@ -41,6 +41,11 @@ requirejs.config({
         'app' : {
            //Facebook Application ID 
            facebookAppId : '420013294796915'  
+        },
+        //Config Vimeo Video Requests 
+        'models/VimeoRequestModel' : {
+            userName      :  'brad',
+            maxVideoCount :  5
         }     
     }    
 });

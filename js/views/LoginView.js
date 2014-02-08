@@ -1,11 +1,11 @@
-define(['models/FacebookUser','text!templates/login.html'], function(FacebookUser, loginTemplate) {
+define(['text!templates/login.html'], function(loginTemplate) {
 
     var LoginView = Backbone.View.extend({
         el : "#container",
 
-        initialize : function () {
-            this.model = new FacebookUser();
+        initialize : function (options) {
             this.render();
+            this.setOptions(options);
             this.registerDOMElements();
             this.bindEvents();
             this.model.updateLoginStatus();
@@ -14,6 +14,10 @@ define(['models/FacebookUser','text!templates/login.html'], function(FacebookUse
         render : function () {            
             this.$el.html(loginTemplate);
             return this;
+        },
+
+        setOptions : function (options) {
+            this.model = options.model; 
         },
         
         registerDOMElements : function () {
