@@ -56,7 +56,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
 
             //Touch Events
 
-            $(window).hammer().on('swipeleft', ".jcarousel-wrapper" , function(event) {
+            $('.jcarousel-wrapper').hammer().on('swipeleft',  function(event) {
                 console.log(event.currentTarget);
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':last')) {
@@ -64,7 +64,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                 } 
             }); 
 
-            $(window).hammer().on('swiperight', ".jcarousel-wrapper" , function(event) {
+            $('.jcarousel-wrapper').hammer().on('swiperight', function(event) {
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':first')) {
                    activePage.prev().click(); 
