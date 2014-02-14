@@ -1,4 +1,4 @@
-define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
+define(['jquery.Hammer', 'models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
    function(VimeoRequestModel, CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
@@ -78,8 +78,9 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },   
         
         events : {
-            "click #logout_fb"     : "logoutHandler",
-            "click .close"         : "closeModalHandler", 
+            "click #logout_fb"         : "logoutHandler",
+            "click .close"             : "closeModalHandler",
+            "swipe .jcarousel-wrapper" : "swipeHandler"
         },
 
         logoutHandler : function(event) {
@@ -92,6 +93,10 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             iframe.show();
             this.dom.modal.hide();
         }, 
+
+        swipeHandler : function (event) {
+            console.log(event.direction);
+        },
 
         showModalHandler : function(data) {
             var iframe = $('#'+data),
