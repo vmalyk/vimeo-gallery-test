@@ -73,10 +73,8 @@ define(['jquery.jCarousel','jquery.Swipe'], function() {
             this.dom.carousel.swipe({
                 //Generic swipe handler for all directions
                 swipe:function(event, direction, distance, duration, fingerCount) {
-                  a("You swiped " + direction );  
-                },
-                //Default is 75px, set to 0 for demo so any distance triggers swipe
-                threshold:0
+                  console.log("You swiped " + direction );  
+                }
             });
                 
             this.dom.paging
