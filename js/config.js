@@ -36,7 +36,7 @@ requirejs.config({
         "jquery.SpecialEvents" : {
             deps    : ['query.Hammer'],
             exports : "jQuery", 
-        }
+        },
         "underscore": {
             exports : "_"
         },
