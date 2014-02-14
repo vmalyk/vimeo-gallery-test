@@ -14,6 +14,7 @@ requirejs.config({
         "hammerjs"         : "lib/jquery/hammer.min",
         "jquery.jCarousel" : "lib/jquery/jquery.jcarousel.min",
         "jquery.Hammer"    : "lib/jquery/jquery.hammer.min", 
+        "jquery.Swipe"     : "lib/jquery/jquery.touchSwipe.min", 
         //Backbone & Underscore
         "underscore"       : "lib/underscore/underscore.min",
         "backbone"         : "lib/backbone/backbone.min",
