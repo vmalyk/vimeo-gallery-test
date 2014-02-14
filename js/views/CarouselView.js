@@ -57,10 +57,7 @@ define(['jquery.jCarousel','jquery.Swipe'], function() {
             //Touch Events
             /*
             this.dom.carousel.hammer().on('swipeleft', function() {
-                var activePage  = $('.jcarousel-pagination').find('a.active'); 
-                if (!activePage.is(':last')) {
-                   activePage.next().click(); 
-                }
+                
             }); 
 
             this.dom.carousel.hammer().on('swiperight', function() {
@@ -72,8 +69,17 @@ define(['jquery.jCarousel','jquery.Swipe'], function() {
             */
             this.dom.carousel.swipe({
                 //Generic swipe handler for all directions
-                swipe:function(event, direction, distance, duration, fingerCount) {
-                  alert("You swiped " + direction );  
+                swipeLeft:function(event, direction, distance, duration, fingerCount) {
+                    var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                    if (!activePage.is(':last')) {
+                       activePage.next().click(); 
+                    }  
+                },
+                swipeRight:function(event, direction, distance, duration, fingerCount) {
+                    var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                    if (!activePage.is(':first')) {
+                       activePage.prev().click(); 
+                    }
                 },
                 threshold:0
             });
