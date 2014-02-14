@@ -1,4 +1,4 @@
-define(['jquery.jCarousel','jquery.Hammer'], function() {
+define(['jquery.jCarousel','jquery.Swipe'], function() {
     var MAX_WIDTH = 700,
         MAX_PER_PAGE = 2;
 
@@ -55,6 +55,7 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                 });
 
             //Touch Events
+            /*
             this.dom.carousel.hammer().on('swipeleft', function() {
                 var activePage  = $('.jcarousel-pagination').find('a.active'); 
                 if (!activePage.is(':last')) {
@@ -68,7 +69,16 @@ define(['jquery.jCarousel','jquery.Hammer'], function() {
                    activePage.prev().click(); 
                 }
             });
-
+            */
+            this.dom.carousel.swipe({
+                //Generic swipe handler for all directions
+                swipe:function(event, direction, distance, duration, fingerCount) {
+                  a("You swiped " + direction );  
+                },
+                //Default is 75px, set to 0 for demo so any distance triggers swipe
+                threshold:0
+            });
+                
             this.dom.paging
                 .on('jcarouselpagination:active', 'a', function() {
                     $(this).addClass('active');
