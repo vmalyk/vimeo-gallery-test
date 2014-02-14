@@ -1,4 +1,4 @@
-define(['jquery.Hammer', 'models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
+define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html','jquery.Hammer'], 
    function(VimeoRequestModel, CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
