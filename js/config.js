@@ -7,10 +7,13 @@ requirejs.config({
         "facebook"         : [
                                "http://connect.facebook.net/en_US/all",
                                "lib/api/fb"
-                             ], 
+                             ],
+        "frogaloop"        : "lib/api/froogaloop.min",                      
         //jQuery
         "jquery"           : "lib/jquery/jquery.min",
+        "hammerjs"         : "lib/jquery/hammer.min",
         "jquery.jCarousel" : "lib/jquery/jquery.jcarousel.min",
+        "jquery.Hammer"    : "lib/jquery/jquery.hammer.min", 
         //Backbone & Underscore
         "underscore"       : "lib/underscore/underscore.min",
         "backbone"         : "lib/backbone/backbone.min",
@@ -21,6 +24,9 @@ requirejs.config({
     shim: {
         "facebook"  : {
             exports : "FB"
+        },
+        "frogaloop" : {
+            exports : "$f",
         },
         "jquery.jCarousel" : {
             deps    : ["jquery"],
@@ -39,11 +45,16 @@ requirejs.config({
         'app' : {
            //Facebook Application ID 
            facebookAppId : '420013294796915'  
+        },
+        //Config Vimeo Video Requests 
+        'models/VimeoRequestModel' : {
+            userName      :  'brad',
+            maxVideoCount :  5
         }     
     }    
 });
 
-define(["facebook", "jquery", "underscore", "backbone"], function () {
+define(["facebook", "frogaloop", "jquery", "underscore", "backbone"], function () {
     require(["app"]);    
 });
 

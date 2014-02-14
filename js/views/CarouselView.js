@@ -1,4 +1,4 @@
-define(['jquery.jCarousel'], function() {
+define(['jquery.jCarousel','jquery.Hammer'], function() {
     var MAX_WIDTH = 700,
         MAX_PER_PAGE = 2;
 
@@ -16,13 +16,16 @@ define(['jquery.jCarousel'], function() {
         pageTemplate : _.template('<a href="#<%= page %>"><%= page %></a>'),
         
         viewTemplate : _.template('<ul>\
-                                       <% _.each(models, function(model) { %>\
-                                          <%= itemTempate(model) %>\
+                                       <% _.each(models, function(model, key) { %>\
+                                          <%= itemTempate(_.extend({}, model, {number : key})) %>\
                                        <% }); %>\
-                                       <li></li>\
+                                       <% if (models.length % 2 != 0 ) { %><li></li><% } %>\
                                    </ul>'), 
 
-        itemTemplate : _.template('<li><img src="<%= fileName %>" alt="<%= description %>"></li>'),
+        itemTemplate : _.template('<li>\
+                                       <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=player<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
+                                       </iframe>\
+                                    </li>'),
 
         render : function () {
             var html = this.viewTemplate({
@@ -34,12 +37,12 @@ define(['jquery.jCarousel'], function() {
 
         bindEvents : function() {
             var carousel = this.dom.carousel,
-                pageTemplate = this.pageTemplate;
+                pageTemplate = this.pageTemplate,
+                itemCount = this.models.length;
 
             this.dom.carousel
                 .on('jcarousel:reload jcarousel:create', function () {
                     var width = carousel.innerWidth();
-                
                     if (width >= MAX_WIDTH) {
                         width = width / MAX_PER_PAGE;
                         perPage = MAX_PER_PAGE
@@ -50,6 +53,22 @@ define(['jquery.jCarousel'], function() {
                 .jcarousel({
                     wrap: 'circular'
                 });
+
+            //Touch Events
+            this.dom.carousel.hammer().on('swipeleft', function() {
+                var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                if (!activePage.is(':last')) {
+                   activePage.next().click(); 
+                }
+            }); 
+
+            this.dom.carousel.hammer().on('swiperight', function() {
+                var activePage  = $('.jcarousel-pagination').find('a.active'); 
+                if (!activePage.is(':first')) {
+                   activePage.prev().click(); 
+                }
+            });
+
             this.dom.paging
                 .on('jcarouselpagination:active', 'a', function() {
                     $(this).addClass('active');
@@ -62,8 +81,8 @@ define(['jquery.jCarousel'], function() {
                 })
                 .jcarouselPagination({
                     perPage: perPage,
-                    item: function(page) {
-                        return pageTemplate({ page : page });
+                    item: function(page) {                         
+                        return (page <= itemCount) && pageTemplate({ page : page });
                     }
                 });
 

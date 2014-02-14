@@ -1,81 +1,110 @@
-define(['models/FacebookUser', 'views/CarouselView' , 'text!templates/profile.html'], 
-   function(FacebookUser, CarouselView, profileTemplate) {
+define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
+   function(VimeoRequestModel, CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
         el : "#container",
 
-        initialize : function () {
-            this.model = new FacebookUser();
+        initialize : function (options) {            
             this.render();
+            this.setOptions(options);
             this.registerDOMElements();
             this.bindEvents();
-            this.model.updateLoginStatus();
+            this.fetchData();
         },
 
-        render : function () {            
+        render : function () {
             this.$el.html(profileTemplate);
             return this;
         },
         
+        setOptions : function (options) {
+            this.userModel = options.model;            
+            this.requestModel = new VimeoRequestModel(); 
+        },
+
         registerDOMElements : function () {
             this.dom = {
                 userPhoto     : this.$('#photo'),
                 userName      : this.$('#username'), 
                 videoCarousel : this.$('.jcarousel'),
                 videoPaging   : this.$('.jcarousel-pagination'),
+                modal         : this.$('#modal'), 
                 logoutButton  : this.$('#logout_fb'),   
             }
         }, 
 
         bindEvents : function () {
-            this.model.on('change', _.bind(this.onFbConnected, this));
-            this.model.on('facebook:disconnected', _.bind(this.onFbDisConnected, this));  
+            this.userModel.on('change', this.onFbConnected, this);
+            this.userModel.on('facebook:disconnected', this.onFbDisConnected, this);
+            this.requestModel.on(this.requestModel.dataLoadedEvent, this.onVideoLoaded, this);
+            this.requestModel.on(this.requestModel.dataNotLoadedEvent, this.onFbDisConnected);  
         },
 
-        onFbConnected : function() {
-            this.dom.userPhoto.attr("src", this.model.get('pictures').normal);
-            this.dom.userName.html(this.model.get('first_name') + '<br/>' + this.model.get('last_name'));
-            var imgModel = [
-              {id: 1, fileName: "img/img1.jpg", description : "Image 1"},
-              {id: 2, fileName: "img/img2.jpg", description : "Image 2"},
-              {id: 3, fileName: "img/img3.jpg", description : "Image 3"},
-              {id: 4, fileName: "img/img4.jpg", description : "Image 4"},
-              {id: 5, fileName: "img/img5.jpg", description : "Image 5"}
-            ]
+        fetchData : function () {
+            this.userModel.updateLoginStatus();            
+        },
 
+        onFbConnected : function(model) {
+            this.dom.userPhoto.attr("src", model.get('pictures')['normal']);
+            this.dom.userName.html(model.get('first_name') + '<br/>' + model.get('last_name'));
+            this.userModel.isConnected() && this.requestModel.fetchData();
+        },
+
+        onFbDisConnected : function(model, response) {
+            window.location.hash = "";
+        },
+
+        onVideoLoaded : function (data) {
             this.videoCarousel = new CarouselView({
-                models    : imgModel,
+                models   : this.requestModel.trimBySettings(data),
                 dom      : {
                     carousel : this.dom.videoCarousel,
                     paging   : this.dom.videoPaging
                 }   
-
             });
-        },
+            
+            var view = this;
 
-        onFbDisConnected : function(model) {
-            window.location.hash = "";
-        }, 
+            var players = $('.video-player');
+            _.each(players, function(player) { 
+                $f(player).addEvent('ready', ready);
+            }); 
 
-        showStatus : function(status) {
-            this.dom.loginStatus.text(status);
-        },
-
+            function ready(player_id) {
+                var froogaloop = $f(player_id);
+                froogaloop.addEvent('play', _.bind(view.closeModalHandler, view));    
+                froogaloop.addEvent('finish', _.bind(view.showModalHandler, view));
+            }   
+        },   
+        
         events : {
-            "click #logout_fb" : "logoutHandler",
+            "click #logout_fb"     : "logoutHandler",
+            "click .close"         : "closeModalHandler", 
         },
-
 
         logoutHandler : function(event) {
             event.preventDefault();
-            this.model.logout();  
+            this.userModel.logout();  
         },
-        
+
+        closeModalHandler : function(event) {
+            var iframe = this.dom.modal.closest('li').find('.video-player');
+            iframe.show();
+            this.dom.modal.hide();
+        }, 
+
+        showModalHandler : function(data) {
+            var iframe = $('#'+data),
+                modal = this.dom.modal,
+                list = iframe.closest('li');
+            iframe.hide();
+            list.append(modal.show());
+        },
+
         undelegateEvents: function () {
             !this.videoCarousel || this.videoCarousel.undelegateEvents();             
         }
-
-
     });
+
     return GalleryView; 
 });

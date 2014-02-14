@@ -1,12 +1,11 @@
-define(['models/FacebookUser','text!templates/login.html'], function(FacebookUser, loginTemplate) {
+define(['text!templates/login.html'], function(loginTemplate) {
 
     var LoginView = Backbone.View.extend({
         el : "#container",
 
-        initialize : function () {
-            this.model = new FacebookUser();
+        initialize : function (options) {
             this.render();
-            this.registerDOMElements();
+            this.setOptions(options);
             this.bindEvents();
             this.model.updateLoginStatus();
         },
@@ -15,18 +14,14 @@ define(['models/FacebookUser','text!templates/login.html'], function(FacebookUse
             this.$el.html(loginTemplate);
             return this;
         },
-        
-        registerDOMElements : function () {
-            this.dom = {
-                loginStatus  : this.$('#loginstatus'),
-                loginButton  : this.$('#login_fb'),
-                logoutButton : this.$('#logout_fb'),   
-            }
-        }, 
 
+        setOptions : function (options) {
+            this.model = options.model; 
+        },
+        
         bindEvents : function () {
-            this.model.on('facebook:connected', _.bind(this.onFbConnected, this));
-            this.model.on('facebook:disconnected', _.bind(this.onFbDisConnected, this));  
+            this.model.on('facebook:connected', this.onFbConnected, this);
+            this.model.on('facebook:disconnected', this.onFbDisConnected, this);  
         },
 
         onFbConnected : function(model, response) {
@@ -36,10 +31,6 @@ define(['models/FacebookUser','text!templates/login.html'], function(FacebookUse
         onFbDisConnected : function(model, response) {
             window.location.hash = "";
         }, 
-
-        showStatus : function(status) {
-            this.dom.loginStatus.text(status);
-        },
 
         events : {
             "click #login_fb"  : "loginHandler"
