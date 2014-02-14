@@ -7,6 +7,7 @@ define(['jquery.jCarousel'], function() {
     var CarouselComponent = function(options) {
         this.dom = options.dom;
         this.models = options.models;
+        this.init();
     };
 
     CarouselComponent.prototype = {
