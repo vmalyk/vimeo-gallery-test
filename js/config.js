@@ -10,11 +10,11 @@ requirejs.config({
                              ],
         "frogaloop"        : "lib/api/froogaloop.min",                      
         //jQuery
-        "jquery"           : "lib/jquery/jquery.min",
-        "hammerjs"         : "lib/jquery/hammer.min",
-        "jquery.jCarousel" : "lib/jquery/jquery.jcarousel.min",
-        "jquery.Hammer"    : "lib/jquery/jquery.hammer.min", 
-        "jquery.Swipe"     : "lib/jquery/jquery.touchSwipe.min", 
+        "jquery"              : "lib/jquery/jquery.min",
+        "hammerjs"            : "lib/jquery/hammer.min",
+        "jquery.jCarousel"    : "lib/jquery/jquery.jcarousel.min",
+        "jquery.Hammer"       : "lib/jquery/jquery.hammer.min",
+        "jquery.SpecialEvents": "lib/jquery/jquery.specialevents.hammer",
         //Backbone & Underscore
         "underscore"       : "lib/underscore/underscore.min",
         "backbone"         : "lib/backbone/backbone.min",
@@ -33,6 +33,10 @@ requirejs.config({
             deps    : ["jquery"],
             exports : "jQuery", 
         },
+        "jquery.SpecialEvents" : {
+            deps    : ['query.Hammer'],
+            exports : "jQuery", 
+        }
         "underscore": {
             exports : "_"
         },
