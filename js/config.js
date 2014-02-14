@@ -14,10 +14,10 @@ requirejs.config({
         "hammerjs"            : "lib/jquery/hammer.min",
         "jquery.jCarousel"    : "lib/jquery/jquery.jcarousel.min",
         "jquery.Hammer"       : "lib/jquery/jquery.hammer.min",
-        "jquery.SpecialEvents": "lib/jquery/jquery.specialevents.hammer",
         //Backbone & Underscore
-        "underscore"       : "lib/underscore/underscore.min",
-        "backbone"         : "lib/backbone/backbone.min",
+        "underscore"          : "lib/underscore/underscore.min",
+        "backbone"            : "lib/backbone/backbone.min",
+        "backbone.Hammer"     : "lib/backbone/backbone.hammer",
         //requirejs plugin
         "text"             : "lib/require/text",
          
