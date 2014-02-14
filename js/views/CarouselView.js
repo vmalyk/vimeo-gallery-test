@@ -7,9 +7,6 @@ define(['jquery.jCarousel'], function() {
     var CarouselComponent = function(options) {
         this.dom = options.dom;
         this.models = options.models;
-        console.log(this);
-        this.render();
-        this.bindEvents();
     };
 
     CarouselComponent.prototype = {
@@ -27,6 +24,11 @@ define(['jquery.jCarousel'], function() {
                                        <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=player<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
                                        </iframe>\
                                     </li>'),
+       
+        init : function () {
+            this.render();
+            this.bindEvents(); 
+        },
 
         render : function () {
             var html = this.viewTemplate({
