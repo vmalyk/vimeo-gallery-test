@@ -81,10 +81,9 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },   
         
         events : {
-            "click #logout_fb"         : "logoutHandler",
-            "click .close"             : "closeModalHandler",
-            "mouseup .video-overlay"   : "playVideoHandler",
-            "touchend .video-overlay"   : "playVideoHandler"
+            "click #logout_fb"       : "logoutHandler",
+            "click .close"           : "closeModalHandler",
+            "click .video-overlay"   : "playVideoHandler"
         },
 
         logoutHandler : function(event) {
@@ -106,7 +105,9 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },
 
         playVideoHandler : function(event) {
-            event.preventDefault();            
+            event.preventDefault();
+            event.stopPropagation(); 
+             $('#event').text(event.type);            
             var target = $(event.target),
                 player = target.closest('li').find('.video-player')[0],
                 players = $('.video-player');

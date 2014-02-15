@@ -117,12 +117,11 @@ define(['jquery.jCarousel'], function() {
                     x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
                 })
                 .on(en, function(e){
-                    var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
-                    if(newx == x) { $(e.target).trigger('touchend'); }
+                    $('#event').text(e.type);
                     t = 0; x = 0;                    
                 })
                 .on(mv, function(e){
-                    e.preventDefault();
+                    e.preventDefault();                    
                     var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
                     r = (x === 0) ? 0 : Math.abs(newx - x),
                     // allow if movement < 1 sec
