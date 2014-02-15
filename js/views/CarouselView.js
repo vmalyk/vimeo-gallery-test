@@ -117,7 +117,9 @@ define(['jquery.jCarousel'], function() {
                     x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
                 })
                 .on(en, function(e){
-                    t = 0; x = 0;
+                    var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
+                    if(newx == x) { $(e.target).trigger('click'); }
+                    t = 0; x = 0;                    
                 })
                 .on(mv, function(e){
                     e.preventDefault();
@@ -131,6 +133,7 @@ define(['jquery.jCarousel'], function() {
                         if (newx > x) { slider.goBack(); }
                         t = 0; x = 0;
                     }
+
                 });
         },
 
