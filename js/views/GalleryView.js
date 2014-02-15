@@ -105,8 +105,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             iframe.closest('li').append(modal.show());
         },
 
-        playVideoHandler : function(event) {
-            event.preventDefault();           
+        playVideoHandler : function(event) {          
             var target = $(event.target),
                 player = target.closest('li').find('.video-player')[0],
                 players = $('.video-player');

@@ -112,7 +112,7 @@ define(['jquery.jCarousel'], function() {
             $('.jcarousel-wrapper')
                 .on(st, function(e){
                     // prevent image drag (Firefox)
-                    e.preventDefault();
+                    //e.preventDefault();
                     t = (new Date()).getTime();
                     x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
                 })
@@ -120,13 +120,13 @@ define(['jquery.jCarousel'], function() {
                     t = 0; x = 0;                    
                 })
                 .on(mv, function(e){
-                    e.preventDefault();                    
+                    //e.preventDefault();
                     var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
                     r = (x === 0) ? 0 : Math.abs(newx - x),
                     // allow if movement < 1 sec
                     ct = (new Date()).getTime();  
                     if (t !== 0 && ct - t < time && r > range) {
-                        (newx != x) && e.stopImmediatePropagation();
+                        //(newx != x) && e.stopImmediatePropagation();
                         if (newx < x) { slider.goForward(); }
                         if (newx > x) { slider.goBack(); }
                         t = 0; x = 0;
