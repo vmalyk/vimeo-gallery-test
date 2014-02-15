@@ -83,7 +83,8 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         events : {
             "click #logout_fb"         : "logoutHandler",
             "click .close"             : "closeModalHandler",
-            "click .video-overlay"     : "playVideoHandler"
+            "mouseup .video-overlay"   : "playVideoHandler",
+            "touchend .video-overlay"   : "playVideoHandler"
         },
 
         logoutHandler : function(event) {
