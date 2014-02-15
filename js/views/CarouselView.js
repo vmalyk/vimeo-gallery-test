@@ -117,7 +117,6 @@ define(['jquery.jCarousel'], function() {
                     x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
                 })
                 .on(en, function(e){
-                    $('#event').text(e.type);
                     t = 0; x = 0;                    
                 })
                 .on(mv, function(e){

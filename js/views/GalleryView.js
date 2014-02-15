@@ -77,13 +77,14 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
                 froogaloop.addEvent('play', _.bind(view.closeModalHandler, view));
                 froogaloop.addEvent('pause', _.bind(view.stopVideoHandler, view));    
                 froogaloop.addEvent('finish', _.bind(view.showModalHandler, view));
-            }   
+            } 
+
+            $(document).on("click", ".video-overlay", this.playVideoHandler);  
         },   
         
         events : {
             "click #logout_fb"       : "logoutHandler",
-            "click .close"           : "closeModalHandler",
-            "click .video-overlay"   : "playVideoHandler"
+            "click .close"           : "closeModalHandler"
         },
 
         logoutHandler : function(event) {
@@ -105,9 +106,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         },
 
         playVideoHandler : function(event) {
-            event.preventDefault();
-            event.stopPropagation(); 
-             $('#event').text(event.type);            
+            event.preventDefault();           
             var target = $(event.target),
                 player = target.closest('li').find('.video-player')[0],
                 players = $('.video-player');
