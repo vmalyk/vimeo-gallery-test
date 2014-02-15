@@ -126,7 +126,7 @@ define(['jquery.jCarousel'], function() {
                     // allow if movement < 1 sec
                     ct = (new Date()).getTime();  
                     if (t !== 0 && ct - t < time && r > range) {
-                        e.stopImmediatePropagation();
+                        (newx != x) && e.stopImmediatePropagation();
                         if (newx < x) { slider.goForward(); }
                         if (newx > x) { slider.goBack(); }
                         t = 0; x = 0;
