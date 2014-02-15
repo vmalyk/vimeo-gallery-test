@@ -122,11 +122,11 @@ define(['jquery.jCarousel'], function() {
                 .on(mv, function(e){
                     e.preventDefault();
                     var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
-                    (newx!= x) && e.stopImmediatePropagation();  
                     r = (x === 0) ? 0 : Math.abs(newx - x),
                     // allow if movement < 1 sec
-                    ct = (new Date()).getTime();
+                    ct = (new Date()).getTime();  
                     if (t !== 0 && ct - t < time && r > range) {
+                        e.stopImmediatePropagation();
                         if (newx < x) { slider.goForward(); }
                         if (newx > x) { slider.goBack(); }
                         t = 0; x = 0;
