@@ -121,7 +121,6 @@ define(['jquery.jCarousel'], function() {
                 })
                 .on(mv, function(e){
                     e.preventDefault();
-                    e.stopImmediatePropagation(); 
                     var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
                     r = (x === 0) ? 0 : Math.abs(newx - x),
                     // allow if movement < 1 sec
