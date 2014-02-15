@@ -24,11 +24,13 @@ define(['jquery.jCarousel'], function() {
         itemTemplate : _.template('<li>\
                                        <iframe id="player<%= number %>" class="video-player" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=player<%= number %>" webkitAllowFullScreen mozallowfullscreen allowFullScreen>\
                                        </iframe>\
+                                       <div class="video-overlay"></div>\
                                     </li>'),
        
         init : function () {
             this.render();
-            this.bindEvents(); 
+            this.bindEvents();
+            this.enableSwipe(this); 
         },
 
         render : function () {
@@ -58,40 +60,7 @@ define(['jquery.jCarousel'], function() {
                     wrap: 'circular'
                 });
 
-            //Touch Events
-            /*
-            $('.jcarousel-wrapper').hammer().on('swipeleft',  function(event) {
-                console.log(event.currentTarget);
-                var activePage  = $('.jcarousel-pagination').find('a.active'); 
-                if (!activePage.is(':last')) {
-                    activePage.next().click(); 
-                } 
-            }); 
-
-            $('.jcarousel-wrapper').hammer().on('swiperight', function(event) {
-                var activePage  = $('.jcarousel-pagination').find('a.active'); 
-                if (!activePage.is(':first')) {
-                   activePage.prev().click(); 
-                }
-            });
-          
-            this.dom.carousel.swipe({
-                //Generic swipe handler for all directions
-                swipeLeft:function(event, direction, distance, duration, fingerCount) {
-                    var activePage  = $('.jcarousel-pagination').find('a.active'); 
-                    if (!activePage.is(':last')) {
-                       activePage.next().click(); 
-                    }  
-                },
-                swipeRight:function(event, direction, distance, duration, fingerCount) {
-                    var activePage  = $('.jcarousel-pagination').find('a.active'); 
-                    if (!activePage.is(':first')) {
-                       activePage.prev().click(); 
-                    }
-                },
-                threshold:0
-            });
-               */    
+    
             this.dom.paging
                 .on('jcarouselpagination:active', 'a', function() {
                     $(this).addClass('active');
@@ -116,6 +85,55 @@ define(['jquery.jCarousel'], function() {
                 });
             });
         },
+
+        goForward : function () {
+            var activePage  = $('.jcarousel-pagination').find('a.active'); 
+            if (!activePage.is(':last')) {
+                activePage.next().click(); 
+            } 
+        },
+
+        goBack  : function () {
+            var activePage  = $('.jcarousel-pagination').find('a.active'); 
+            if (!activePage.is(':first')) {
+                activePage.prev().click(); 
+            }
+        }, 
+
+        enableSwipe : function(slider) {
+
+            var time = 1000, // allow movement if < 1000 ms (1 sec)
+                range = 50,  // swipe movement of 50 pixels triggers the slider
+                x = 0, t = 0, touch = "ontouchend" in document,
+                st = (touch) ? 'touchstart' : 'mousedown',
+                mv = (touch) ? 'touchmove' : 'mousemove',
+                en = (touch) ? 'touchend' : 'mouseup';
+            
+            $('.jcarousel-wrapper')
+                .on(st, function(e){
+                    // prevent image drag (Firefox)
+                    e.preventDefault();
+                    t = (new Date()).getTime();
+                    x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
+                })
+                .on(en, function(e){
+                    t = 0; x = 0;
+                })
+                .on(mv, function(e){
+                    e.preventDefault();
+                    e.stopImmediatePropagation(); 
+                    var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
+                    r = (x === 0) ? 0 : Math.abs(newx - x),
+                    // allow if movement < 1 sec
+                    ct = (new Date()).getTime();
+                    if (t !== 0 && ct - t < time && r > range) {
+                        if (newx < x) { slider.goForward(); }
+                        if (newx > x) { slider.goBack(); }
+                        t = 0; x = 0;
+                    }
+                });
+        },
+
 
         undelegateEvents : function () {
             $(window).off('resize');

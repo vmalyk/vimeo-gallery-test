@@ -1,4 +1,4 @@
-define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html','backbone.Hammer'], 
+define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profile.html'], 
    function(VimeoRequestModel, CarouselView, profileTemplate) {
 
     var GalleryView = Backbone.View.extend({
@@ -11,6 +11,8 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             this.bindEvents();
             this.fetchData();
         },
+
+
 
         render : function () {
             this.$el.html(profileTemplate);
@@ -72,7 +74,8 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
 
             function ready(player_id) {
                 var froogaloop = $f(player_id);
-                froogaloop.addEvent('play', _.bind(view.closeModalHandler, view));    
+                froogaloop.addEvent('play', _.bind(view.closeModalHandler, view));
+                froogaloop.addEvent('pause', _.bind(view.stopVideoHandler, view));    
                 froogaloop.addEvent('finish', _.bind(view.showModalHandler, view));
             }   
         },   
@@ -80,7 +83,7 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
         events : {
             "click #logout_fb"         : "logoutHandler",
             "click .close"             : "closeModalHandler",
-            "swipe .jcarousel-wrapper" : "swipeHandler"
+            "click .video-overlay"     : "playVideoHandler" 
         },
 
         logoutHandler : function(event) {
@@ -88,23 +91,34 @@ define(['models/VimeoRequestModel', 'views/CarouselView' , 'text!templates/profi
             this.userModel.logout();  
         },
 
-        closeModalHandler : function(event) {
-            var iframe = this.dom.modal.closest('li').find('.video-player');
-            iframe.show();
+        closeModalHandler : function() {
+            this.dom.modal.closest('li').find('.video-player,.video-overlay').show();
             this.dom.modal.hide();
         }, 
 
-        swipeHandler : function (event) {
-            console.log(event.direction);
-        },
-
         showModalHandler : function(data) {
             var iframe = $('#'+data),
-                modal = this.dom.modal,
-                list = iframe.closest('li');
-            iframe.hide();
-            list.append(modal.show());
+                overlay = iframe.closest('li').find('.video-overlay'),  
+                modal = this.dom.modal;
+            iframe.add(overlay).hide();
+            iframe.closest('li').append(modal.show());
         },
+
+        playVideoHandler : function(event) {
+            var target = $(event.target),
+                player = target.closest('li').find('.video-player')[0],            
+                players = $('.video-player');
+            _.each(players, function(player) { 
+                $f(player).api('pause');
+            }); 
+            target.hide();
+            $f(player).api('play');
+        },
+        
+        stopVideoHandler : function(data) {
+            var iframe = $('#'+data);
+            iframe.closest('li').find('.video-overlay').show();  
+        },   
 
         undelegateEvents: function () {
             !this.videoCarousel || this.videoCarousel.undelegateEvents();             
